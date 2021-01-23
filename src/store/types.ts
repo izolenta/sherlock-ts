@@ -1,2 +1,2 @@
-export const APP_START = 'APP_START';
-export type APP_START_ACTION = typeof APP_START;
+export const GO_TO_GAME = 'GO_TO_GAME';
+export type GO_TO_GAME_ACTRION = typeof GO_TO_GAME;

@@ -1,13 +1,22 @@
-import { FC, useContext } from 'react';
+import CIcon from '@coreui/icons-react'
+import { freeSet } from '@coreui/icons'
+import React, { FC, useContext } from 'react';
 import Context from '../../context';
 import './sherlockRules.css'
+import '../../store/actions'
+import { GO_TO_GAME } from '../../store/types';
 
 const SherlockRules : FC<{}> = () => {
   const { state, dispatch } = useContext(Context);
+
+  const goToGame = function() {
+    dispatch({type: GO_TO_GAME, payload: {}});
+  }
+
   return (
     <div>
       <div className='block1'>
-        &laquo;...Sherlock is a computerized version of logic puzzles, where you're presented with a series of clues that help you to determine the exact locations of all of the images on the playing board. Each row of the playing board contains images of the same type (faces, houses, numbers, fruit, street signs, letters, etc). The computer scrambles the locations of the items in each row (without showing you their locations) and then presents to you a set of graphical clues that describe the positional relationships of different images. You use the clues to deduce where things can't be (and where they HAVE to be) until you know where all of the images are located.&raquo; <span className='nowrap'>&copy; <a href='http://www.kaser.com/sherwin.html'>Everett Kaiser</a></span>
+        &laquo;...Sherlock is a computerized version of logic puzzles, where you're presented with a series of clues that help you to determine the exact locations of all of the images on the playing board. Each row of the playing board contains images of the same type (faces, houses, numbers, fruit, street signs, letters, etc). The computer scrambles the locations of the items in each row (without showing you their locations) and then presents to you a set of graphical clues that describe the positional relationships of different images. You use the clues to deduce where things can't be (and where they HAVE to be) until you know where all of the images are located.&raquo; <span className='nowrap'>&copy; <a href='http://www.kaser.com/sherwin.html'>Everett Kaser</a></span>
       </div>
       <div className='block2'>
         This game has been created under the inspiration of the old-school Sherlock game, originally written by Everett Kaiser more than 20 years ago.
@@ -24,17 +33,19 @@ const SherlockRules : FC<{}> = () => {
       <div className='block4'>- If you realize that your solution process is going wrong, you can press 'Undo to Last Correct' to return to last known correct position and continue from there.</div>
       <div className='block4'>- You can try Medium and even Hard difficulty levels if you believe that Easy is too easy for you!</div>
       <div className='block4'>- This page can be opened any time by pressing help button in bottom-right corner. Your game won't be interrupted.</div>
-      <div className='block5'><a href='javascript:void(0)'>Start (or continue) your game!</a></div>
+      <div className='block5'><a href='javascript:void(0)' className='link' onClick={goToGame}>Start (or continue) your game!</a></div>
       <div className='block3'>Credits:</div>
-      <div className='block6'>Idea: <a href='http://www.kaser.com/sherwin.html' target='_blank' rel='noreferrer'>Everett Kaiser</a></div>
-      <div className='block6'>Pictures: <a href='https://emojione.com/' target='_blank' rel='noreferrer'>Emojione v3.0</a></div>
+      <div className='block6'>Idea: <a href='http://www.kaser.com/sherwin.html' className='link' target='_blank' rel='noreferrer'>Everett Kaser</a></div>
+      <div className='block6'>Pictures: <a href='https://emojione.com/' className='link' target='_blank' rel='noreferrer'>Emojione v3.0</a></div>
       <div className='block6'>
-        Sounds: <a href='https://www.freesound.org/people/GabrielAraujo/sounds/242501/' target='_blank' rel='noreferrer'>GabrielAraujo</a>, <a href='https://www.freesound.org/people/fins/sounds/171670/' target='_blank' rel='noreferrer'>fins</a>  and <a href='https://www.freesound.org/people/Porphyr/sounds/191678/' target='_blank' rel='noreferrer'>Porphyr</a>
+        Sounds: <a className='link' href='https://www.freesound.org/people/GabrielAraujo/sounds/242501/' target='_blank' rel='noreferrer'>GabrielAraujo</a>, <a className='link' href='https://www.freesound.org/people/fins/sounds/171670/' target='_blank' rel='noreferrer'>fins</a>  and <a className='link' href='https://www.freesound.org/people/Porphyr/sounds/191678/' target='_blank' rel='noreferrer'>Porphyr</a>
       </div>
       <div className='block6'>&nbsp;</div>
       <div className='block6'>
-        Coding: &copy; <a href='https://github.com/izolenta' target='_blank' rel='noreferrer'>Izolenta</a> especially for AngularAttack 2017, rewritten from Dart/Angular to TS/React in 2021
+        Coding: &copy; <a className='link' href='https://github.com/izolenta' target='_blank' rel='noreferrer'>Izolenta</a> especially for AngularAttack 2017, rewritten from Dart/Angular to TS/React in 2021
       </div>
+      
+      <CIcon className='icon-right link' content={freeSet.cilChevronCircleRightAlt}size="3xl" onClick={goToGame}/>
     </div>
   );
 };

@@ -1,8 +1,8 @@
 import * as types from './types';
 
-export interface AppStartAction {
-  type: types.APP_START_ACTION;
+export interface GoToGameAction {
+  type: types.GO_TO_GAME_ACTRION;
   payload: {}
 }
 
-export type TAction = AppStartAction;
+export type TAction = GoToGameAction;
