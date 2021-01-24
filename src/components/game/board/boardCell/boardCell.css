@@ -5,3 +5,8 @@
   background: url(../../../../img/stripe.png) repeat;
   border: 1px solid #666;
 }
+
+.resolved {
+  position:relative;
+  left: 16px;
+}
