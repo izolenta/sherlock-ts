@@ -25,7 +25,7 @@ export class TwoAdjacentClue extends GenericClue {
     let isApplied = false;
     const first = this.items[0];
     const second = this.items[1];
-    let newState = Object.assign({}, state);
+    let newState = state.clone();
     for (let i=0; i<6; i++) {
       const stateFirst = newState.getCell(first.line, i);
       if (stateFirst.hasPossibleItem(first.item)) {
@@ -63,7 +63,7 @@ export class TwoAdjacentClue extends GenericClue {
     const line2 = randomInt(6);
     let position1 = randomInt(5);
     let position2 = position1+1;
-    if (randomInt(2) == 1) {
+    if (randomInt(2) === 1) {
       const temp = position1;
       position1 = position2;
       position2 = temp;

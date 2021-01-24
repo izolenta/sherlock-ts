@@ -1,4 +1,4 @@
-import {without} from "typescript-array-utils";
+import {removeElement} from "../util/util";
 
 export class CellState {
   readonly possibleTurns: number[];
@@ -20,22 +20,22 @@ export class CellState {
   }
 
   isResolvedTo(item: number): boolean {
-    return this.getCurrentSolution() === item;
+    return this.isSolved() && this.getCurrentSolution() === item;
   }
 
   isProperlySolved(): boolean {
     return this.possibleTurns.length === 1 && this.possibleTurns[0] === this.properSolution;
   } 
 
-  getCurrentSolution(): number | undefined {
+  getCurrentSolution(): number {
     if (this.isSolved()) {
       return this.possibleTurns[0];
     }
-    return undefined;
+    throw new RangeError('Cell is not resolved!');
   }
 
   removePossibleTurn(item: number): CellState {
-    return new CellState(this.index, {turns: without(this.possibleTurns, item), proper: this.properSolution});
+    return new CellState(this.index, {turns: removeElement(this.possibleTurns, item), proper: this.properSolution});
   }
 
   resolveTo(item: number): CellState {

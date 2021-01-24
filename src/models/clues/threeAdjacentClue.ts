@@ -23,7 +23,7 @@ export class ThreeAdjacentClue extends GenericClue {
   }
 
   applyToBoard(state: BoardState): AppliedResult {
-    let newState = Object.assign({}, state);
+    let newState = state.clone();
     let result1 = ThreeAdjacentClue.checkCenterItemNotAtBounds(this.items[2], newState);
     let result2 = ThreeAdjacentClue.checkThreeAdjacent(this.items[0], this.items[1], this.items[2], result1.state);
     let result3 = ThreeAdjacentClue.checkThreeAdjacent(this.items[1], this.items[0], this.items[2], result2.state);
@@ -39,7 +39,7 @@ export class ThreeAdjacentClue extends GenericClue {
 
   private static checkCenterItemNotAtBounds(center: ClueItem, state: BoardState): AppliedResult {
     let isApplied = false;
-    let newState = Object.assign({}, state);
+    let newState = state.clone();
     let stateThird = state.getCell(center.line, 0);
     if (stateThird.hasPossibleItem(center.item)) {
       newState = updateBoardStateWithCell(newState, stateThird.removePossibleTurn(center.item));
@@ -55,7 +55,7 @@ export class ThreeAdjacentClue extends GenericClue {
 
   private static checkThreeAdjacent(first: ClueItem, second: ClueItem, third: ClueItem, state: BoardState): AppliedResult {
     let isApplied = false;
-    let newState = Object.assign({}, state);
+    let newState = state.clone();
     for (let i=0; i<6; i++) {
       let stateFirst = newState.getCell(first.line, i);
       if (stateFirst.hasPossibleItem(first.item)) {

@@ -4,7 +4,7 @@ import {BoardState} from "../boardState";
 import {randomInt} from "../../service/randomService";
 import {updateBoardStateWithCell} from "../../service/gameService";
 
-export class OneShouldBeBeforeOther extends GenericClue {
+export class OneShouldBeBeforeOtherClue extends GenericClue {
   constructor(items: Array<ClueItem>, isUsed = false) {
     super({
       descr: 'The item {0} should be placed in the column to the left (not necessarily adjacent left) of {1}\n' +
@@ -15,7 +15,7 @@ export class OneShouldBeBeforeOther extends GenericClue {
   }
 
   isEqual(clue: GenericClue): boolean {
-    if (clue instanceof OneShouldBeBeforeOther) {
+    if (clue instanceof OneShouldBeBeforeOtherClue) {
       return super.isEqual(clue);
     }
     return false;
@@ -25,7 +25,7 @@ export class OneShouldBeBeforeOther extends GenericClue {
     let isApplied = false;
     let mostLeft = 0;
     let mostRight = 5;
-    let newState = Object.assign({}, state);
+    let newState = state.clone();
     const first = this.items[0];
     const second = this.items[1];
     for (let i=0; i<6; i++) {
@@ -36,38 +36,37 @@ export class OneShouldBeBeforeOther extends GenericClue {
       }
     }
     for (let i=5; i>-1; i--) {
-      const cell = newState.getCell(second.line, + i);
+      const cell = newState.getCell(second.line, i);
       if (cell.hasPossibleItem(second.item)) {
         mostRight = i;
         break;
       }
     }
     for (let i=0; i<=mostLeft; i++) {
-      const cell = newState.getCell(second.line, + i);
+      const cell = newState.getCell(second.line, i);
       if (cell.hasPossibleItem(second.item)) {
         newState = updateBoardStateWithCell(newState, cell.removePossibleTurn(second.item));
         isApplied = true;
       }
     }
     for (let i=5; i>=mostRight; i--) {
-      const cell = newState.getCell(first.line, + i);
+      const cell = newState.getCell(first.line, i);
       if (cell.hasPossibleItem(first.item)) {
         newState = updateBoardStateWithCell(newState, cell.removePossibleTurn(first.item));
-        isApplied = true;
       }
     }
 
     return {state: newState, isApplied: isApplied};
   }
 
-  setUsed(isUsed: boolean): OneShouldBeBeforeOther {
+  setUsed(isUsed: boolean): OneShouldBeBeforeOtherClue {
     if (this.isUsed === isUsed) {
       return this;
     }
-    return new OneShouldBeBeforeOther(this.items, isUsed);
+    return new OneShouldBeBeforeOtherClue(this.items, isUsed);
   }
 
-  static generateClue(state: BoardState): OneShouldBeBeforeOther {
+  static generateClue(state: BoardState): OneShouldBeBeforeOtherClue {
     const line1 = randomInt(6);
     const line2 = randomInt(6);
     const position1 = randomInt(5);
@@ -76,7 +75,7 @@ export class OneShouldBeBeforeOther extends GenericClue {
     const item2 = state.getCell(line2, position2).properSolution;
     const first = new ClueItem(line1, item1);
     const second = new ClueItem(line2, item2);
-    return new OneShouldBeBeforeOther([first, second]);
+    return new OneShouldBeBeforeOtherClue([first, second]);
   }
 
 }
