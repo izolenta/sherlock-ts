@@ -1,9 +1,17 @@
-export class GenericClue {
+import {ClueItem} from "./clueItem";
+import {BoardState} from "../boardState";
+
+export interface AppliedResult {
+  state: BoardState,
+  isApplied: boolean,
+}
+
+export abstract class GenericClue {
   readonly description: string;
   readonly isUsed: boolean;
-  readonly items: Array<GenericClue>;
+  readonly items: Array<ClueItem>;
 
-  constructor(descr: string, items: Array<GenericClue>, isUsed: boolean = false) {
+  protected constructor({descr = '', items = new Array<ClueItem>(), isUsed = false}) {
     this.description = descr;
     this.items = items;
     this.isUsed = isUsed;
@@ -14,10 +22,14 @@ export class GenericClue {
       return false;
     }
     for (let index = 0; index < this.items.length; index++) {
-      if (this.items[index] != clue.items[index]) {
+      if (this.items[index] !== clue.items[index]) {
         return false;
       }
     }
     return true;
   }
+
+  abstract applyToBoard(state: BoardState): AppliedResult;
+
+  abstract setUsed(isUsed: boolean): GenericClue;
 }
