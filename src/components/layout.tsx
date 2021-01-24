@@ -1,12 +1,12 @@
-import React, { FC, useContext, useReducer } from 'react';
+import React, { FC, useContext } from 'react';
 import Context from '../context';
 import './layout.css'
 import SherlockRules from './rules/sherlockRules'
 import SherlockGame from './game/sherlockGame'
 
 const Layout : FC<{}> = () => {
-  const { state } = useContext(Context);
-  const control = state.isRulesOn
+  const context = useContext(Context);
+  const control = context.state.isRulesOn
   ? <SherlockRules></SherlockRules> 
   : <SherlockGame></SherlockGame>
   return (

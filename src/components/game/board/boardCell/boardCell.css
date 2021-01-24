@@ -1,0 +1,7 @@
+.cell {
+  width: 96px;
+  height: 64px;
+  padding: 4px;
+  background: url(../../../../img/stripe.png) repeat;
+  border: 1px solid #666;
+}

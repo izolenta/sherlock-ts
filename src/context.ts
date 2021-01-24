@@ -1,6 +1,7 @@
 import { createContext, Dispatch } from 'react';
+import { SherlockState } from './models/sherlockState';
 import { TAction } from './store/actions';
-import initialState, { SherlockState } from './store/initialState';
+import initialState from './store/initialState';
 
 interface ContextProps {
   state: SherlockState;

@@ -1,0 +1,5 @@
+.board-content {
+  display: grid;
+  width: 500px;
+  grid-template-columns: repeat(6, 1fr);
+}

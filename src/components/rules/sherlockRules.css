@@ -52,6 +52,19 @@
 }
 
 .icon-right {
-  float: right;
-  margin-right: 24px;
+  opacity: 0.8;
+  position: absolute;
+  top: 722px;
+  left: 1238px;
+  cursor: pointer;
+}
+
+button.pseudo {
+  background: transparent;
+    border: 0;
+    font-size: 24px;
+    text-decoration: underline;
+    padding: 0;
+    outline: 0;
+    cursor: pointer;
 }

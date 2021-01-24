@@ -1,11 +1,8 @@
-export interface SherlockState {
-  message: string,
-  isRulesOn: boolean,
-}
-
+import { GameState } from '../models/gameState';
+import {SherlockState} from '../models/sherlockState'
 const initialState: SherlockState = {
-  message: "Hey state set",
   isRulesOn: true,
+  gameState: new GameState({}),
 } 
 
 export default initialState;
