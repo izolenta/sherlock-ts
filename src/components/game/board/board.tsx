@@ -21,11 +21,12 @@ export default class Board extends React.Component<BoardProps> {
       data.push(<BoardCell key={index} state={states[index]} dispatch={this.props.dispatch}></BoardCell>);
     }
     return (
-      <React.Fragment>
+      <div className='board-block'>
         <div className='text-label'>Board</div>
         <div className='board-content'>
           {data}
         </div>
-      </React.Fragment>);
+      </div>
+    );
   }
 }

@@ -30,6 +30,10 @@
   height: 28px;
 }
 
+.empty {
+  background: none;
+}
+
 .sprite.s00 {background-position: 0 0}
 .sprite.s10 {background-position: 0 20%}
 .sprite.s20 {background-position: 0 40%}

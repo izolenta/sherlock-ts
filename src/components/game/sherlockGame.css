@@ -5,3 +5,8 @@
   left: 1238px;
   cursor: pointer;
 }
+
+.top-part {
+  display: flex;
+  flex-direction: row;
+}
