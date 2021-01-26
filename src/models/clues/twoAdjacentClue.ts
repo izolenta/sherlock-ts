@@ -14,13 +14,6 @@ export class TwoAdjacentClue extends GenericClue {
     });
   }
 
-  isEqual(clue: GenericClue): boolean {
-    if (clue instanceof TwoAdjacentClue) {
-      return super.isEqual(clue);
-    }
-    return false;
-  }
-
   applyToBoard(state: BoardState): AppliedResult {
     let isApplied = false;
     const first = this.items[0];

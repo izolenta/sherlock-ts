@@ -14,13 +14,6 @@ export class OneShouldBeBeforeOtherClue extends GenericClue {
     });
   }
 
-  isEqual(clue: GenericClue): boolean {
-    if (clue instanceof OneShouldBeBeforeOtherClue) {
-      return super.isEqual(clue);
-    }
-    return false;
-  }
-
   applyToBoard(state: BoardState): AppliedResult {
     let isApplied = false;
     let mostLeft = 0;

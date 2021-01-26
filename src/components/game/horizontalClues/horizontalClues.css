@@ -1,45 +1,51 @@
 .clues-block {
-    flex-grow: 1;
+  flex-grow: 1;
 }
 
 .horizontal-clue {
-    width: 144px;
-    height: 48px;
-    padding: 4px;
-    border: 2px solid #fff;
-    position: relative;
-    border-radius: 8px;
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    background: url('../../../img/clue-bg.png');
+  width: 144px;
+  height: 48px;
+  padding: 4px;
+  border: 2px solid #fff;
+  position: relative;
+  border-radius: 8px;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  background: url('../../../img/clue-bg.png');
 }
 
 .arrow3 {
-    position: absolute;
-    left: 4px;
-    opacity: 0.9;
-    top: 10px;
-    transform: scaleX(0.6);
+  position: absolute;
+  left: 4px;
+  opacity: 0.9;
+  top: 10px;
+  transform: scaleX(0.6);
 }
 
 .arrow2 {
-    position: absolute;
-    left: 4px;
-    opacity: 0.9;
-    top: 10px;
-    transform: scaleX(0.4);
+  position: absolute;
+  left: 4px;
+  opacity: 0.9;
+  top: 10px;
+  transform: scaleX(0.4);
 }
 
 .dots {
-    position: absolute;
-    left: 52px;
-    top: 4px;
+  position: absolute;
+  left: 52px;
+  top: 4px;
 }
 
-.clue-content {
-    display: grid;
-    grid-auto-flow: column;
-    grid-gap: 1px;
-    grid-template-columns: repeat(3, 160px);
-    grid-template-rows: repeat(7, 63px);
+.horizontal-clue .cross {
+  position: absolute;
+  left: 52px;
+  top: 4px;
+}
+
+.horizontal-clue-content {
+  display: grid;
+  grid-auto-flow: column;
+  grid-gap: 1px;
+  grid-template-columns: repeat(3, 160px);
+  grid-template-rows: repeat(7, 63px);
 }

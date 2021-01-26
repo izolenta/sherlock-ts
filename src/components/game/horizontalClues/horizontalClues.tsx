@@ -11,6 +11,7 @@ import crossImg from '../../../img/cross.png';
 import dotsImg from '../../../img/dots.png';
 import arrows2x2 from '../../../img/arrows-2x2.png';
 import arrows3x2 from '../../../img/arrows-3x2.png';
+import {TwoNotAdjacentClue} from "../../../models/clues/twoNotAdjacentClue";
 
 
 interface ClueProps {
@@ -21,7 +22,10 @@ interface ClueProps {
 export default class HorizontalClues extends React.Component<ClueProps> {
 
   isThreeCellClue(clue: GenericClue) {
-    return clue instanceof OneShouldBeBeforeOtherClue || clue instanceof ThreeAdjacentClue || clue instanceof TwoAdjacentClue;
+    return clue instanceof OneShouldBeBeforeOtherClue
+      || clue instanceof ThreeAdjacentClue
+      || clue instanceof TwoAdjacentClue
+      || clue instanceof TwoNotAdjacentClue;
   }
 
   getFirstItem(clue:GenericClue): ClueItem | undefined {
@@ -34,9 +38,9 @@ export default class HorizontalClues extends React.Component<ClueProps> {
     if (clue instanceof OneShouldBeBeforeOtherClue) {
       return (clue as OneShouldBeBeforeOtherClue).items[0];
     }
-    // if (clue instanceof TwoNotAdjacentClue) {
-    //   return (clue as TwoNotAdjacentClue).first;
-    // }
+    if (clue instanceof TwoNotAdjacentClue) {
+      return (clue as TwoNotAdjacentClue).items[0];
+    }
     // if (clue instanceof TwoWithNoThirdAtCenterClue) {
     //   return (clue as TwoWithNoThirdAtCenterClue).first;
     // }
@@ -53,9 +57,9 @@ export default class HorizontalClues extends React.Component<ClueProps> {
     if (clue instanceof OneShouldBeBeforeOtherClue) {
       return (clue as OneShouldBeBeforeOtherClue).items[1];
     }
-    // if (clue instanceof TwoNotAdjacentClue) {
-    //   return null;
-    // }
+    if (clue instanceof TwoNotAdjacentClue) {
+      return undefined;
+    }
     // if (clue instanceof TwoWithNoThirdAtCenterClue) {
     //   return (clue as TwoWithNoThirdAtCenterClue).second;
     // }
@@ -72,9 +76,9 @@ export default class HorizontalClues extends React.Component<ClueProps> {
     if (clue instanceof OneShouldBeBeforeOtherClue) {
       return undefined;
     }
-    // if (clue instanceof TwoNotAdjacentClue) {
-    //   return (clue as TwoNotAdjacentClue).second;
-    // }
+    if (clue instanceof TwoNotAdjacentClue) {
+      return (clue as TwoNotAdjacentClue).items[1]
+    }
     // if (clue instanceof TwoWithNoThirdAtCenterClue) {
     //   return (clue as TwoWithNoThirdAtCenterClue).third;
     // }
@@ -97,8 +101,7 @@ export default class HorizontalClues extends React.Component<ClueProps> {
   }
 
   needToDisplayCross(clue: GenericClue): boolean {
-    //return clue instanceof TwoWithNoThirdAtCenterClue || clue instanceof TwoNotAdjacentClue;
-    return false;
+    return clue instanceof TwoNotAdjacentClue; // clue instanceof TwoWithNoThirdAtCenterClue || ;
   }
 
   needToDisplayArrows3(clue: GenericClue): boolean {
@@ -138,7 +141,7 @@ export default class HorizontalClues extends React.Component<ClueProps> {
         node.push(<div className={this.getSpriteClass(clue, 2)}/>);
         node.push(<div className={this.getSpriteClass(clue, 1)}/>);
         if (this.needToDisplayCross(clue)) {
-          node.push(<img src={crossImg} alt='cross'/>);
+          node.push(<img src={crossImg} alt='cross' className='cross'/>);
         }
         if (this.needToDisplayDots(clue)) {
           node.push(<img src={dotsImg} alt='dots' className='dots'/>);
@@ -159,7 +162,7 @@ export default class HorizontalClues extends React.Component<ClueProps> {
     return (
       <div className='clues-block'>
         <div className='text-label'>Clues</div>
-        <div className='clue-content'>
+        <div className='horizontal-clue-content'>
           {data}
         </div>
       </div>

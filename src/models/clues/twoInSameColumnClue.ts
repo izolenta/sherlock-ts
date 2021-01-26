@@ -27,13 +27,6 @@ export class TwoInSameColumnClue extends GenericClue {
     return new TwoInSameColumnClue([first, second]);
   }
 
-  isEqual(clue: GenericClue): boolean {
-    if (clue instanceof TwoInSameColumnClue) {
-      return super.isEqual(clue);
-    }
-    return false;
-  }
-
   setUsed(isUsed: boolean): TwoInSameColumnClue {
     if (this.isUsed === isUsed) {
       return this;

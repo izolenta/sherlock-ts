@@ -1,0 +1,26 @@
+.vertical-clue-content {
+  display: grid;
+  grid-gap: 1px;
+  grid-template-columns: repeat(30, 66px);
+}
+
+.vertical-clue {
+  width: 56px;
+  height: 108px;
+  display: block;
+  padding: 4px;
+  border: 2px solid #fff;
+  position: relative;
+  border-radius: 8px;
+  background: url('../../../img/clue-bg.png') repeat;
+}
+
+.vertical-clue > .cross {
+  position: absolute;
+  left: 8px;
+  top: 8px;
+}
+
+.padded {
+  margin: 4px;
+}

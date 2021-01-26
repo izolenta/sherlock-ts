@@ -15,13 +15,6 @@ export class ThreeAdjacentClue extends GenericClue {
     });
   }
 
-  isEqual(clue: GenericClue): boolean {
-    if (clue instanceof ThreeAdjacentClue) {
-      return super.isEqual(clue);
-    }
-    return false;
-  }
-
   applyToBoard(state: BoardState): AppliedResult {
     let newState = state.clone();
     let result1 = ThreeAdjacentClue.checkCenterItemNotAtBounds(this.items[2], newState);

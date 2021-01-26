@@ -18,7 +18,7 @@ export abstract class GenericClue {
   }
 
   isEqual(clue: GenericClue): boolean {
-    if (this.items.length !== clue.items.length) {
+    if (this.constructor.name !== clue.constructor.name || this.items.length !== clue.items.length) {
       return false;
     }
     for (let index = 0; index < this.items.length; index++) {

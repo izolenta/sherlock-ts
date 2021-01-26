@@ -4,6 +4,8 @@ import {TwoInSameColumnClue} from "../models/clues/twoInSameColumnClue";
 import {TwoAdjacentClue} from "../models/clues/twoAdjacentClue";
 import {OneShouldBeBeforeOtherClue} from "../models/clues/oneShouldBeBeforeOtherClue";
 import {ThreeAdjacentClue} from "../models/clues/threeAdjacentClue";
+import {TwoNotAdjacentClue} from "../models/clues/twoNotAdjacentClue";
+import {TwoNotInSameColumnClue} from "../models/clues/twoNotInSameColumnClue";
 
 export function generateClueSet(board: BoardState, difficulty: number) {
 
@@ -29,11 +31,26 @@ export function generateClueSet(board: BoardState, difficulty: number) {
     } while (containsClue(clues, clue));
     clues.push(clue);
   }
-  for (let i=0; i<5; i++)
-  {
+  for (let i=0; i<5; i++) {
     let clue;
     do {
       clue = ThreeAdjacentClue.generateClue(board);
+    } while (containsClue(clues, clue));
+    clues.push(clue);
+  }
+
+  for (let i=0; i<5; i++) {
+    let clue;
+    do {
+      clue = TwoNotAdjacentClue.generateClue(board);
+    } while (containsClue(clues, clue));
+    clues.push(clue);
+  }
+
+  for (let i=0; i<5; i++) {
+    let clue;
+    do {
+      clue = TwoNotInSameColumnClue.generateClue(board);
     } while (containsClue(clues, clue));
     clues.push(clue);
   }
