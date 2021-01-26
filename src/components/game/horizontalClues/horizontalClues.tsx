@@ -1,22 +1,23 @@
 import React, {Dispatch} from 'react';
-import {TAction} from '../../../store/actions';
 import {GenericClue} from '../../../models/clues/genericClue';
 import {OneShouldBeBeforeOtherClue} from '../../../models/clues/oneShouldBeBeforeOtherClue';
 import {ThreeAdjacentClue} from '../../../models/clues/threeAdjacentClue';
 import {TwoAdjacentClue} from '../../../models/clues/twoAdjacentClue';
 import {ClueItem} from '../../../models/clues/clueItem';
 import './horizontalClues.css';
+import '../../../styles/common.css';
 
 import crossImg from '../../../img/cross.png';
 import dotsImg from '../../../img/dots.png';
 import arrows2x2 from '../../../img/arrows-2x2.png';
 import arrows3x2 from '../../../img/arrows-3x2.png';
 import {TwoNotAdjacentClue} from "../../../models/clues/twoNotAdjacentClue";
+import {SherlockAction, USE_CLUE} from "../../../store/types";
 
 
 interface ClueProps {
   clues: GenericClue[],
-  dispatch: Dispatch<TAction>,
+  dispatch: Dispatch<SherlockAction>,
 }
 
 export default class HorizontalClues extends React.Component<ClueProps> {
@@ -152,8 +153,9 @@ export default class HorizontalClues extends React.Component<ClueProps> {
         if (this.needToDisplayArrows2(clue)) {
           node.push(<img src={arrows2x2} alt='arrows2x2'  className='arrow2'/>);
         }
+        const style = clue.isUsed? 'horizontal-clue used' : 'horizontal-clue';
         data.push(
-          <div className='horizontal-clue'>
+          <div className={style} onContextMenu={(event) => this.reverseUsed(clue, event)}>
             {node}
           </div>
         );
@@ -162,10 +164,15 @@ export default class HorizontalClues extends React.Component<ClueProps> {
     return (
       <div className='clues-block'>
         <div className='text-label'>Clues</div>
-        <div className='horizontal-clue-content'>
+        <div className='horizontal-clue-content' >
           {data}
         </div>
       </div>
     );
+  }
+
+  private reverseUsed(clue: GenericClue, event: React.MouseEvent) {
+    this.props.dispatch({type: USE_CLUE, payload: clue});
+    event.preventDefault();
   }
 }

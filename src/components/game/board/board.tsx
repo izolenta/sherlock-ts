@@ -2,14 +2,14 @@ import React from "react";
 import { Dispatch } from "react";
 import { CellState } from "../../../models/cellState";
 import { SherlockState } from "../../../models/sherlockState";
-import { TAction } from "../../../store/actions";
 import BoardCell from './boardCell/boardCell'
 import './board.css'
 import '../../../styles/common.css'
+import {SherlockAction} from "../../../store/types";
 
 interface BoardProps {
   state: SherlockState,
-  dispatch: Dispatch<TAction>,
+  dispatch: Dispatch<SherlockAction>,
 }
 
 export default class Board extends React.Component<BoardProps> {

@@ -1,11 +1,21 @@
-import * as types from './types';
+import {GO_TO_GAME, GO_TO_SETTINGS, SherlockAction, USE_CLUE} from "./types";
+import {GenericClue} from '../models/clues/genericClue';
 
-export interface GoToGameAction {
-  type: types.GO_TO_GAME_TYPE;
+export function createGoToGameAction(): SherlockAction {
+  return {
+    type: GO_TO_GAME
+  }
 }
 
-export interface GoToSettingsAction {
-  type: types.GO_TO_SETTINGS_TYPE;
+export function createGoToSettingsAction(): SherlockAction {
+  return {
+    type: GO_TO_SETTINGS
+  }
 }
 
-export type TAction = GoToGameAction | GoToSettingsAction;
+export function createUseClueAction(clue: GenericClue): SherlockAction {
+  return {
+    type: USE_CLUE,
+    payload: clue,
+  }
+}

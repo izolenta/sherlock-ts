@@ -1,17 +1,17 @@
 import React, {Dispatch} from 'react';
-import {TAction} from '../../../store/actions';
 import {GenericClue} from '../../../models/clues/genericClue';
 import {ClueItem} from '../../../models/clues/clueItem';
 import './verticalClues.css';
+import '../../../styles/common.css';
 
 import crossImg from '../../../img/cross.png';
 import {TwoInSameColumnClue} from "../../../models/clues/twoInSameColumnClue";
 import {TwoNotInSameColumnClue} from "../../../models/clues/twoNotInSameColumnClue";
-
+import {SherlockAction, USE_CLUE} from "../../../store/types";
 
 interface ClueProps {
   clues: GenericClue[],
-  dispatch: Dispatch<TAction>,
+  dispatch: Dispatch<SherlockAction>,
 }
 
 export default class VerticalClues extends React.Component<ClueProps> {
@@ -67,8 +67,9 @@ export default class VerticalClues extends React.Component<ClueProps> {
         if (this.needToDisplayCross(clue)) {
           node.push(<img src={crossImg} alt='cross' className='cross'/>);
         }
+        const style = clue.isUsed? 'vertical-clue used' : 'vertical-clue';
         data.push(
-          <div className='vertical-clue'>
+          <div className={style} onContextMenu={(event) => this.reverseUsed(clue, event)}>
             {node}
           </div>
         );
@@ -82,5 +83,10 @@ export default class VerticalClues extends React.Component<ClueProps> {
         </div>
       </div>
     );
+  }
+
+  private reverseUsed(clue: GenericClue, event: React.MouseEvent) {
+    this.props.dispatch({type: USE_CLUE, payload: clue});
+    event.preventDefault();
   }
 }

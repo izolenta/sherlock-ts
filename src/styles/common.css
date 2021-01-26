@@ -70,3 +70,7 @@
 .sprite.s35 {background-position: 100% 60%}
 .sprite.s45 {background-position: 100% 80%}
 .sprite.s55 {background-position: 100% 100%}
+
+.used {
+  opacity: 0.5;
+}

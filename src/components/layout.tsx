@@ -9,6 +9,9 @@ const Layout : FC<{}> = () => {
   const control = context.state.isRulesOn
   ? <SherlockRules></SherlockRules> 
   : <SherlockGame></SherlockGame>
+  document.addEventListener('contextmenu', (e) => {
+    e.preventDefault();
+  });
   return (
     <div className='canvas'>
       { control }
