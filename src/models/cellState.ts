@@ -1,22 +1,20 @@
-import {removeElement} from "../util/util";
-
 export class CellState {
-  readonly possibleTurns: number[];
+  readonly possibleTurns: number;
   readonly properSolution: number;
   readonly index: number;
 
-  constructor(index: number, {turns = [0,1,2,3,4,5], proper = 0}) {
+  constructor(index: number, {turns = 63, proper = 0}) {
     this.possibleTurns = turns;
     this.properSolution = proper;
     this.index = index;
   }
 
   isSolved(): boolean {
-    return this.possibleTurns.length === 1;
+    return (this.possibleTurns & (this.possibleTurns-1)) === 0;
   }
 
   hasPossibleItem(item: number) {
-    return this.possibleTurns.includes(item);
+    return (this.possibleTurns & Math.pow(2, item)) !== 0;
   }
 
   isResolvedTo(item: number): boolean {
@@ -24,24 +22,39 @@ export class CellState {
   }
 
   isProperlySolved(): boolean {
-    return this.possibleTurns.length === 1 && this.possibleTurns[0] === this.properSolution;
+    return this.getCurrentSolution() === this.properSolution;
   } 
 
   getCurrentSolution(): number {
     if (this.isSolved()) {
-      return this.possibleTurns[0];
+      for (let i=0; i<6; i++) {
+        if ((this.possibleTurns & Math.pow(2, i)) !== 0) {
+          return i;
+        }
+      }
     }
     throw new RangeError('Cell is not resolved!');
   }
 
   removePossibleTurn(item: number): CellState {
-    return new CellState(this.index, {turns: removeElement(this.possibleTurns, item), proper: this.properSolution});
+    this.checkItem(item);
+    let newState = this.possibleTurns - Math.pow(2,item);
+    return new CellState(this.index, {turns: newState, proper: this.properSolution});
   }
 
   resolveTo(item: number): CellState {
     if (this.hasPossibleItem(item)) {
-      return new CellState(this.index, {turns: [item], proper: this.properSolution})
+      return new CellState(this.index, {turns: Math.pow(2, item), proper: this.properSolution})
     }
     throw new RangeError('Cannot resolve to this item - not possible move!');
+  }
+
+  private checkItem(item: number) {
+    if (item < 0 || item > 5) {
+      throw new RangeError('Wrong item to resolve');
+    }
+    if (!this.hasPossibleItem(item)) {
+      throw new RangeError('this cell does not contain the item!');
+    }
   }
 }

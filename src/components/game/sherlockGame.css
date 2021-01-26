@@ -12,5 +12,26 @@
 }
 
 .bottom-part {
+  margin-top: 8px;
+}
+
+.buttons {
   margin-top: 16px;
+}
+
+.bottom-button {
+  font-size: 11pt;
+  padding: 10px 22px;
+  color: #eee;
+  width: 180px;
+  background: #710000;
+  opacity: 0.8;
+  outline: none;
+  border: none;
+  border-radius: 4px;
+  margin-right: 8px;
+}
+
+.bottom-button:hover {
+  opacity: 1;
 }

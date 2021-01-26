@@ -3,6 +3,7 @@ import { CellState } from "../../../../models/cellState";
 import './boardCell.css';
 import '../../../../styles/common.css'
 import {SherlockAction} from "../../../../store/types";
+import {generateUniqueID} from "web-vitals/dist/lib/generateUniqueID";
 
 interface BoardCellProps {
   state: CellState,
@@ -18,7 +19,7 @@ export default class BoardCell extends React.Component<BoardCellProps> {
       let position = this.props.state.getCurrentSolution();
       let myClass='sprite large resolved s'+ line + position;
       return <div className='cell'>
-        <div className={myClass}></div>
+        <div className={myClass}/>
       </div>
     }
     else {
@@ -26,13 +27,13 @@ export default class BoardCell extends React.Component<BoardCellProps> {
       for (let i=0; i<6; i++) {
         if (state.hasPossibleItem(i)) {
           let myClass='sprite unresolved s'+ line + i;
-          cells.push(<div className={myClass}/>)
+          cells.push(<div className={myClass} key={generateUniqueID()}/>);
         }
         else {
-          cells.push(<div className='sprite unresolved empty'/>)
+          cells.push(<div className='sprite unresolved empty' key={generateUniqueID()} />);
         }
       }
-      return<div className='cell stack'>
+      return <div className='cell stack'>
         {cells}
       </div>
     }

@@ -8,6 +8,7 @@ import crossImg from '../../../img/cross.png';
 import {TwoInSameColumnClue} from "../../../models/clues/twoInSameColumnClue";
 import {TwoNotInSameColumnClue} from "../../../models/clues/twoNotInSameColumnClue";
 import {SherlockAction, USE_CLUE} from "../../../store/types";
+import {generateUniqueID} from "web-vitals/dist/lib/generateUniqueID";
 
 interface ClueProps {
   clues: GenericClue[],
@@ -62,14 +63,14 @@ export default class VerticalClues extends React.Component<ClueProps> {
     for (let clue of clues) {
       if (this.isTwoCellClue(clue)) {
         const node = [];
-        node.push(<div className={this.getSpriteClass(clue, 0)}/>);
-        node.push(<div className={this.getSpriteClass(clue, 1)}/>);
+        node.push(<div className={this.getSpriteClass(clue, 0)} key={generateUniqueID()}/>);
+        node.push(<div className={this.getSpriteClass(clue, 1)} key={generateUniqueID()}/>);
         if (this.needToDisplayCross(clue)) {
-          node.push(<img src={crossImg} alt='cross' className='cross'/>);
+          node.push(<img src={crossImg} alt='cross' className='cross' key={generateUniqueID()}/>);
         }
         const style = clue.isUsed? 'vertical-clue used' : 'vertical-clue';
         data.push(
-          <div className={style} onContextMenu={(event) => this.reverseUsed(clue, event)}>
+          <div className={style}  key={generateUniqueID()} onContextMenu={(event) => this.reverseUsed(clue, event)}>
             {node}
           </div>
         );

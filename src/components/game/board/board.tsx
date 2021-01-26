@@ -18,7 +18,7 @@ export default class Board extends React.Component<BoardProps> {
     const states = this.props.state.gameState.boardState.cellStates as Array<CellState>;
     const data = [];
     for (let index = 0; index < states.length; index++) {
-      data.push(<BoardCell key={index} state={states[index]} dispatch={this.props.dispatch}></BoardCell>);
+      data.push(<BoardCell key={index} state={states[index]} dispatch={this.props.dispatch}/>);
     }
     return (
       <div className='board-block'>
