@@ -15,9 +15,16 @@ export class TwoAdjacentClue extends GenericClue {
   }
 
   applyToBoard(state: BoardState): AppliedResult {
-    let isApplied = false;
     const first = this.items[0];
     const second = this.items[1];
+    let newState = state.clone();
+    let result1 = this.checkAdjacent(first, second, newState);
+    let result2 = this.checkAdjacent(first, second, result1.state);
+    return {state: result2.state, isApplied: result1.isApplied || result2.isApplied};
+  }
+
+  private checkAdjacent(first: ClueItem, second: ClueItem, state: BoardState): AppliedResult {
+    let isApplied = false;
     let newState = state.clone();
     for (let i=0; i<6; i++) {
       const stateFirst = newState.getCell(first.line, i);
