@@ -13,8 +13,6 @@ import arrows2x2 from '../../../img/arrows-2x2.png';
 import arrows3x2 from '../../../img/arrows-3x2.png';
 import {TwoNotAdjacentClue} from "../../../models/clues/twoNotAdjacentClue";
 import {SherlockAction, USE_CLUE} from "../../../store/types";
-import {generateUniqueID} from "web-vitals/dist/lib/generateUniqueID";
-
 
 interface ClueProps {
   clues: GenericClue[],
@@ -131,24 +129,24 @@ export default class HorizontalClues extends React.Component<ClueProps> {
     for (let clue of clues) {
       if (this.isThreeCellClue(clue)) {
         const node = [];
-        node.push(<div className={this.getSpriteClass(clue, 0)} key={generateUniqueID()}/>);
-        node.push(<div className={this.getSpriteClass(clue, 2)} key={generateUniqueID()}/>);
-        node.push(<div className={this.getSpriteClass(clue, 1)} key={generateUniqueID()}/>);
+        node.push(<div className={this.getSpriteClass(clue, 0)} key={`${clues.indexOf(clue)}-1`}/>);
+        node.push(<div className={this.getSpriteClass(clue, 2)} key={`${clues.indexOf(clue)}-2`}/>);
+        node.push(<div className={this.getSpriteClass(clue, 1)} key={`${clues.indexOf(clue)}-3`}/>);
         if (this.needToDisplayCross(clue)) {
-          node.push(<img src={crossImg} alt='cross' className='cross' key={generateUniqueID()}/>);
+          node.push(<img src={crossImg} alt='cross' className='cross' key={`${clues.indexOf(clue)}-cross`}/>);
         }
         if (this.needToDisplayDots(clue)) {
-          node.push(<img src={dotsImg} alt='dots' className='dots' key={generateUniqueID()}/>);
+          node.push(<img src={dotsImg} alt='dots' className='dots' key={`${clues.indexOf(clue)}-dots`}/>);
         }
         if (this.needToDisplayArrows3(clue)) {
-          node.push(<img src={arrows3x2} alt='arrows3x2' className='arrow3' key={generateUniqueID()}/>);
+          node.push(<img src={arrows3x2} alt='arrows3x2' className='arrow3' key={`${clues.indexOf(clue)}-arrow3`}/>);
         }
         if (this.needToDisplayArrows2(clue)) {
-          node.push(<img src={arrows2x2} alt='arrows2x2'  className='arrow2' key={generateUniqueID()}/>);
+          node.push(<img src={arrows2x2} alt='arrows2x2'  className='arrow2' key={`${clues.indexOf(clue)}-arrow2`}/>);
         }
         const style = clue.isUsed? 'horizontal-clue used' : 'horizontal-clue';
         data.push(
-          <div className={style} key={generateUniqueID()} onContextMenu={(event) => this.reverseUsed(clue, event)}>
+          <div className={style} key={`${clues.indexOf(clue)}-main`} onContextMenu={(event) => this.reverseUsed(clue, event)}>
             {node}
           </div>
         );
