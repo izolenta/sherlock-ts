@@ -9,6 +9,7 @@ import {TwoInSameColumnClue} from "../../../models/clues/twoInSameColumnClue";
 import {TwoNotInSameColumnClue} from "../../../models/clues/twoNotInSameColumnClue";
 import {SherlockAction, USE_CLUE} from "../../../store/types";
 import {generateUniqueID} from "web-vitals/dist/lib/generateUniqueID";
+import ReactTooltip from "react-tooltip";
 
 interface ClueProps {
   clues: GenericClue[],
@@ -70,8 +71,29 @@ export default class VerticalClues extends React.Component<ClueProps> {
           node.push(<img src={crossImg} alt='cross' className='cross' key={generateUniqueID()}/>);
         }
         const style = clue.isUsed? 'vertical-clue used' : 'vertical-clue';
+        let descr = clue.description;
+        let img1 = <div className={'sprite clue small layout-cell padded ' + this.getFirstSpriteClass(clue)}/>
+        let img2 = <div className={'sprite clue small layout-cell padded ' + this.getFirstSpriteClass(clue)}/>
+        //descr = descr.replace('{0}', '<div className={\'sprite clue small layout-cell padded \' + this.getFirstSpriteClass(clue) + \'</div>\'}');
+        let tooltip = '<div class=\'help-tooltip\'>' + {descr} + '<div class=\'right-click\'>Right-click to mark this clue as used</div></div>';
         data.push(
-          <div className={style}  key={generateUniqueID()} onContextMenu={(event) => this.reverseUsed(clue, event)}>
+          <div
+            className={style}
+            key={generateUniqueID()}
+            onContextMenu={(event) => this.reverseUsed(clue, event)}
+            data-tip='lol'
+            data-for={`v-clue-${clues.indexOf(clue)}`}>
+            <ReactTooltip
+              id={`v-clue-${clues.indexOf(clue)}`}
+              effect='solid'
+              class='tooltip-border'
+              backgroundColor='#000'
+              delayHide={100}
+              delayShow={100}
+              html={true}
+              place='right'>
+              {tooltip}
+            </ReactTooltip>
             {node}
           </div>
         );
