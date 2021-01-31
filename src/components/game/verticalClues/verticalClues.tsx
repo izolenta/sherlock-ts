@@ -59,6 +59,7 @@ export default class VerticalClues extends React.Component<ClueProps> {
     const clues = this.props.clues;
     const data = [];
 
+    console.log(clues.length);
 
     for (let clue of clues) {
       if (this.isTwoCellClue(clue)) {

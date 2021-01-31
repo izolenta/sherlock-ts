@@ -43,9 +43,6 @@ export default class HorizontalClues extends React.Component<ClueProps> {
     if (clue instanceof TwoNotAdjacentClue) {
       return (clue as TwoNotAdjacentClue).items[0];
     }
-    // if (clue instanceof TwoWithNoThirdAtCenterClue) {
-    //   return (clue as TwoWithNoThirdAtCenterClue).first;
-    // }
     return undefined;
   }
 
@@ -62,9 +59,6 @@ export default class HorizontalClues extends React.Component<ClueProps> {
     if (clue instanceof TwoNotAdjacentClue) {
       return undefined;
     }
-    // if (clue instanceof TwoWithNoThirdAtCenterClue) {
-    //   return (clue as TwoWithNoThirdAtCenterClue).second;
-    // }
     return undefined;
   }
 
@@ -81,9 +75,6 @@ export default class HorizontalClues extends React.Component<ClueProps> {
     if (clue instanceof TwoNotAdjacentClue) {
       return (clue as TwoNotAdjacentClue).items[1]
     }
-    // if (clue instanceof TwoWithNoThirdAtCenterClue) {
-    //   return (clue as TwoWithNoThirdAtCenterClue).third;
-    // }
     return undefined;
   }
 
@@ -103,15 +94,15 @@ export default class HorizontalClues extends React.Component<ClueProps> {
   }
 
   needToDisplayCross(clue: GenericClue): boolean {
-    return clue instanceof TwoNotAdjacentClue; // clue instanceof TwoWithNoThirdAtCenterClue || ;
+    return clue instanceof TwoNotAdjacentClue;
   }
 
   needToDisplayArrows3(clue: GenericClue): boolean {
-    return clue instanceof ThreeAdjacentClue;// || clue is TwoWithNoThirdAtCenterClue;
+    return clue instanceof ThreeAdjacentClue;
   }
 
   needToDisplayArrows2(clue: GenericClue): boolean {
-    return clue instanceof TwoAdjacentClue; //|| clue instanceof TwoNotAdjacentClue;
+    return clue instanceof TwoAdjacentClue || clue instanceof TwoNotAdjacentClue;
   }
 
   needToDisplayDots(clue: GenericClue): boolean {
@@ -135,6 +126,7 @@ export default class HorizontalClues extends React.Component<ClueProps> {
     const clues = this.props.clues;
     const data = [];
 
+    console.log(clues.length);
 
     for (let clue of clues) {
       if (this.isThreeCellClue(clue)) {

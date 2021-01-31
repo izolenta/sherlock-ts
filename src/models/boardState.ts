@@ -8,8 +8,21 @@ export class BoardState {
     this.cellStates = cells;
   }
 
+  isStillCorrect(): boolean {
+    for (let next of this.cellStates) {
+      if (next.isSolved() && !next.isResolvedTo(next.properSolution)) {
+        return false;
+      }
+    }
+    return true;
+  }
+
   getCell(line: number, index: number) : CellState {
-    return this.cellStates[line*6+index];
+    return this.getCellByIndex(line*6+index);
+  }
+
+  getCellByIndex(index: number) : CellState {
+    return this.cellStates[index];
   }
 
   isResolved(): boolean {

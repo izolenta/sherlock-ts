@@ -20,10 +20,10 @@
 }
 
 .bottom-button {
-  font-size: 11pt;
+  font-size: 14px;
   padding: 10px 22px;
   color: #eee;
-  width: 180px;
+  width: 220px;
   background: #710000;
   opacity: 0.8;
   outline: none;
@@ -34,4 +34,8 @@
 
 .bottom-button:hover {
   opacity: 1;
+}
+
+.bottom-button:disabled {
+  opacity: 0.5;
 }

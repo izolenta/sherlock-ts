@@ -3,7 +3,6 @@ import { freeSet } from '@coreui/icons'
 import React, { FC, useContext } from 'react';
 import Context from '../../context';
 import './sherlockRules.css'
-import '../../store/actions'
 import { GO_TO_GAME } from '../../store/types';
 
 const SherlockRules : FC<{}> = () => {

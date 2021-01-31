@@ -24,14 +24,14 @@ export function generateClueSet(board: BoardState, difficulty: number) {
     } while (containsClue(clues, clue));
     clues.push(clue);
   }
-  for (let i=0; i<5; i++) {
+  for (let i=0; i<10; i++) {
     let clue;
     do {
       clue = OneShouldBeBeforeOtherClue.generateClue(board);
     } while (containsClue(clues, clue));
     clues.push(clue);
   }
-  for (let i=0; i<5; i++) {
+  for (let i=0; i<10; i++) {
     let clue;
     do {
       clue = ThreeAdjacentClue.generateClue(board);
@@ -39,7 +39,7 @@ export function generateClueSet(board: BoardState, difficulty: number) {
     clues.push(clue);
   }
 
-  for (let i=0; i<5; i++) {
+  for (let i=0; i<10; i++) {
     let clue;
     do {
       clue = TwoNotAdjacentClue.generateClue(board);
@@ -47,7 +47,7 @@ export function generateClueSet(board: BoardState, difficulty: number) {
     clues.push(clue);
   }
 
-  for (let i=0; i<5; i++) {
+  for (let i=0; i<10; i++) {
     let clue;
     do {
       clue = TwoNotInSameColumnClue.generateClue(board);

@@ -7,12 +7,6 @@ import {generateClueSet} from "./clueGenerator";
 import {without} from "typescript-array-utils";
 import {trySolve} from "./boardSolver";
 
-export function generateGame(difficulty: number): GameState {
-  const board = new BoardState();
-
-  return new GameState({state: board, clueset: [], difficulty: difficulty, prevStates:[]});
-}
-
 export function initRandomBoard(): Array<CellState> {
   const cells: Array<CellState> = [];
   for (let i = 0; i < 6; i++) {
@@ -46,7 +40,11 @@ interface GeneratedRuleSet {
 }
 
 export function initRandomConfiguration(difficulty: number): GameState {
-  let currentPuzzle = generateRuleSet(new BoardState(), difficulty);
+  let currentPuzzle;
+  do {
+    currentPuzzle = generateRuleSet(new BoardState(), difficulty);
+  } while (!currentPuzzle)
+  console.log(`SEET to: ${currentPuzzle.clues.length}`);
   return new GameState({
     state: currentPuzzle.board,
     clueset: currentPuzzle.clues,
@@ -78,7 +76,7 @@ export function optimizeBoard(field: BoardState) : BoardState {
   return newField;
 }
 
-function optimizeLine(field: BoardState, line: number): BoardState {
+export function optimizeLine(field: BoardState, line: number): BoardState {
   let newField = field.clone();
   for (let i=0; i<6; i++) {
     let foundAt = findOnlyPossiblePositionAtLine(newField, line, i);
@@ -129,9 +127,9 @@ function removeItemAndCheckResolved(field: BoardState, position: number, item: n
   return newField;
 }
 
-function generateRuleSet(field: BoardState, difficulty: number): GeneratedRuleSet {
+function generateRuleSet(field: BoardState, difficulty: number): GeneratedRuleSet | undefined {
   let clues = new Array<GenericClue>();
-  let newField = field.clone()
+  let newField = field.clone();
   for (let i=0; i< difficulty*5; i++) {
     newField = openRandomCell(newField);
   }
@@ -142,9 +140,10 @@ function generateRuleSet(field: BoardState, difficulty: number): GeneratedRuleSe
     let res = checkOpenedCells(fieldClone, clues);
     fieldClone = res.board;
     if (res.openedCells <= 2) {
+      clues = shuffleClues(clues);
       clues = shrinkClues(fieldClone, clues)?? [];
+      console.log(`Length: ${clues.length}`);
       if (clues.length > 0) {
-        clues = shuffleClues(clues);
         break;
       }
     }
@@ -153,8 +152,9 @@ function generateRuleSet(field: BoardState, difficulty: number): GeneratedRuleSe
   let result = fieldClone.clone();
   fieldClone = trySolve(fieldClone, clues);
   if (fieldClone.getNotResolvedCellCount() !== 0) {
-    throw Error('Impossible. Shit happens');
+    return undefined;
   }
+  console.log(`Returned: ${clues.length}`);
   return {board: result, clues: clues};
 }
 
@@ -180,7 +180,7 @@ function shrinkClues(field: BoardState, clues: GenericClue[]): GenericClue[] | u
       return next?? cluesClone;
     }
   }
-  return undefined;
+  return clues;
 }
 
 interface CheckOpenedCellsResult {

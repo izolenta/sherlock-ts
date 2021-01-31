@@ -23,6 +23,8 @@
     "typesafe-actions": "^5.1.0",
     "typescript": "^4.1.3",
     "typescript-array-utils": "^0.1.4",
+    "uifx": "^2.0.7",
+    "use-sound": "^2.0.1",
     "web-vitals": "^0.2.4"
   },
   "scripts": {

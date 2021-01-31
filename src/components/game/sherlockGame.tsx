@@ -5,15 +5,36 @@ import HorizontalClues from './horizontalClues/horizontalClues';
 import VerticalClues from "./verticalClues/verticalClues";
 import {freeSet} from '@coreui/icons';
 import {CIcon} from '@coreui/icons-react';
-import {CYCLE_DIFFICULTY, GO_TO_SETTINGS, START_NEW_GAME} from '../../store/types';
+import {CYCLE_DIFFICULTY, GO_TO_LAST_CORRECT, GO_TO_SETTINGS, START_NEW_GAME, UNDO} from '../../store/types';
 import './sherlockGame.css';
-import {DIFFICULTY_EASY, DIFFICULTY_HARD, DIFFICULTY_MEDIUM} from "../../models/gameDifficulties.d";
+import {DIFFICULTY_EASY, DIFFICULTY_HARD, DIFFICULTY_MEDIUM} from '../../models/gameDifficulties.d';
+import { useState } from 'react'
 
 const SherlockGame: FC = () => {
+
+  const lastCorrectText = 'Go to Last Correct position';
+  const [label, updateLabel] = useState(lastCorrectText);
+
   const context = useContext(Context);
 
   const goToHelp = function () {
     context.dispatch({ type: GO_TO_SETTINGS });
+  }
+
+  const goToLastCorrect = function () {
+    if (!context.state.gameState.boardState.isStillCorrect()) {
+      context.dispatch({ type: GO_TO_LAST_CORRECT });
+    }
+    else {
+      updateLabel('You still doing OK!');
+       setTimeout(() => {
+         updateLabel(lastCorrectText);
+       }, 1500);
+    }
+  }
+
+  const undoMove = function () {
+    context.dispatch({ type: UNDO });
   }
 
   const startNewGame = function () {
@@ -49,6 +70,12 @@ const SherlockGame: FC = () => {
       <div className='buttons'>
         <button className='bottom-button' onClick={startNewGame}>Start New Game</button>
         <button className='bottom-button' onClick={cycleDifficulty}>Difficulty: {getDiffString()}</button>
+        <button className='bottom-button' onClick={undoMove} disabled={context.state.gameState.prevStates.length === 0}>
+          Undo step
+        </button>
+        <button className='bottom-button' onClick={goToLastCorrect}>
+          {label}
+        </button>
       </div>
       <CIcon className='icon-right link' content={freeSet.cilSettings} size='3xl' onClick={goToHelp} />
     </React.Fragment>
