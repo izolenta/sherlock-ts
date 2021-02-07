@@ -3,7 +3,7 @@ import {initRandomConfiguration} from "../service/gameService";
 import {DIFFICULTY_EASY} from "../models/gameDifficulties.d";
 
 const initialState: SherlockState = {
-  isRulesOn: false,
+  isRulesOn: true,
   gameState: initRandomConfiguration(DIFFICULTY_EASY),
 } 
 
