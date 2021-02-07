@@ -7,3 +7,29 @@
 .board-block {
   flex-grow: 0;
 }
+
+.endgame-modal {
+  width: 300px;
+  height: 200px;
+  background: #111;
+  opacity: 0.92;
+  border: 1px solid white;
+  position: absolute;
+  top: 220px;
+  left: 230px;
+  color: white;
+}
+
+.endgame-text {
+  text-align: center;
+  font-size: 28px;
+  margin-top: 40px;
+}
+
+.endgame-subtext {
+  font-size: 16px;
+  margin-top: 36px;
+  padding: 0 24px 0 24px;
+  line-height: 24px;
+  text-align: center;
+}

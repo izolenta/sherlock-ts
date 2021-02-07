@@ -19,9 +19,12 @@ import UIFx from 'uifx';
 import itemRemoved from '../sounds/item_removed.mp3';
 // @ts-ignore
 import gameStarted from '../sounds/cell_opened.mp3';
+// @ts-ignore
+import gameOK from '../sounds/game_ok.mp3';
 
 const itemRemovedAsset = new UIFx(itemRemoved);
 const gameStartedAsset = new UIFx(gameStarted);
+const gameOkAsset = new UIFx(gameOK);
 
 const reducer = (state: SherlockState, action: SherlockAction): SherlockState => {
 
@@ -34,10 +37,9 @@ const reducer = (state: SherlockState, action: SherlockAction): SherlockState =>
       return { ...state, isRulesOn: true };
     case START_NEW_GAME:
       gameStartedAsset.play();
-      let newState = {
+      return {
         ...state,
         gameState: initRandomConfiguration(state.gameState.difficulty)};
-      return newState;
     case CYCLE_DIFFICULTY:
       let difficulty = state.gameState.difficulty-1;
       if (difficulty < 0) {
@@ -94,7 +96,12 @@ const reducer = (state: SherlockState, action: SherlockAction): SherlockState =>
       const line1 = Math.floor(action.payload.index / 6);
       const updatedState1 =
         optimizeLine(updateBoardStateWithCell(state.gameState.boardState, cell1.resolveTo(action.payload.card)), line1);
-      itemRemovedAsset.play();
+      if (updatedState1.isResolved() && updatedState1.isStillCorrect()) {
+        gameOkAsset.play();
+      }
+      else {
+        itemRemovedAsset.play();
+      }
       return {
         ...state,
         gameState: {
