@@ -3,13 +3,14 @@ import {GenericClue} from '../../../models/clues/genericClue';
 import {ClueItem} from '../../../models/clues/clueItem';
 import './verticalClues.css';
 import '../../../styles/common.css';
+import ReactHtmlParser from 'react-html-parser';
 
 import crossImg from '../../../img/cross.png';
 import {TwoInSameColumnClue} from "../../../models/clues/twoInSameColumnClue";
 import {TwoNotInSameColumnClue} from "../../../models/clues/twoNotInSameColumnClue";
 import {SherlockAction, USE_CLUE} from "../../../store/types";
-import {generateUniqueID} from "web-vitals/dist/lib/generateUniqueID";
 import ReactTooltip from "react-tooltip";
+import {renderToString} from "react-dom/server";
 
 interface ClueProps {
   clues: GenericClue[],
@@ -60,41 +61,51 @@ export default class VerticalClues extends React.Component<ClueProps> {
     const clues = this.props.clues;
     const data = [];
 
-    console.log(clues.length);
-
     for (let clue of clues) {
       if (this.isTwoCellClue(clue)) {
+        const index = clues.indexOf(clue);
         const node = [];
-        node.push(<div className={this.getSpriteClass(clue, 0)} key={generateUniqueID()}/>);
-        node.push(<div className={this.getSpriteClass(clue, 1)} key={generateUniqueID()}/>);
+        node.push(<div className={this.getSpriteClass(clue, 0)} key={`${index}-spr-0`}/>);
+        node.push(<div className={this.getSpriteClass(clue, 1)} key={`${index}-spr-1`}/>);
         if (this.needToDisplayCross(clue)) {
-          node.push(<img src={crossImg} alt='cross' className='cross' key={generateUniqueID()}/>);
+          node.push(<img src={crossImg} alt='cross' className='cross' key={`${index}-cross`}/>);
         }
         const style = clue.isUsed? 'vertical-clue used' : 'vertical-clue';
-        let descr = clue.description;
-        let img1 = <div className={'sprite clue small layout-cell padded ' + this.getFirstSpriteClass(clue)}/>
-        let img2 = <div className={'sprite clue small layout-cell padded ' + this.getFirstSpriteClass(clue)}/>
-        //descr = descr.replace('{0}', '<div className={\'sprite clue small layout-cell padded \' + this.getFirstSpriteClass(clue) + \'</div>\'}');
-        let tooltip = '<div class=\'help-tooltip\'>' + {descr} + '<div class=\'right-click\'>Right-click to mark this clue as used</div></div>';
+        let tooltipNode;
+        if (!clue.isUsed) {
+          let descr = clue.description;
+          let img1 = <div className={'sprite clue micro layout-cell padded ' + this.getFirstSpriteClass(clue)}/>
+          let img2 = <div className={'sprite clue micro layout-cell padded ' + this.getSecondSpriteClass(clue)}/>
+          descr = descr.replaceAll('{0}', renderToString(img1));
+          descr = descr.replaceAll('{1}', renderToString(img2));
+
+          let tooltip = <div className='help-tooltip'>
+            {ReactHtmlParser(descr)}
+            <div className='right-click'>
+              Right-click to mark this clue as used
+            </div>
+          </div>;
+
+          tooltipNode = <ReactTooltip
+            id={`v-clue-${clues.indexOf(clue)}`}
+            effect='solid'
+            class='tooltip-border'
+            backgroundColor='#000'
+            delayHide={100}
+            delayShow={100}
+            place='right'>
+            {tooltip}
+          </ReactTooltip>
+        }
         data.push(
           <div
             className={style}
-            key={generateUniqueID()}
+            key={`${index}-tooltip`}
             onContextMenu={(event) => this.reverseUsed(clue, event)}
             data-tip='lol'
             data-for={`v-clue-${clues.indexOf(clue)}`}>
-            <ReactTooltip
-              id={`v-clue-${clues.indexOf(clue)}`}
-              effect='solid'
-              class='tooltip-border'
-              backgroundColor='#000'
-              delayHide={100}
-              delayShow={100}
-              html={true}
-              place='right'>
-              {tooltip}
-            </ReactTooltip>
             {node}
+            {tooltipNode}
           </div>
         );
       }

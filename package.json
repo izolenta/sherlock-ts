@@ -17,6 +17,7 @@
     "less-loader": "^7.3.0",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
+    "react-html-parser": "^2.0.2",
     "react-scripts": "4.0.1",
     "react-tooltip": "^4.2.13",
     "redux": "^4.0.5",
@@ -53,6 +54,7 @@
     ]
   },
   "devDependencies": {
+    "@types/react-html-parser": "^2.0.1",
     "@types/styled-components": "^5.1.7"
   }
 }

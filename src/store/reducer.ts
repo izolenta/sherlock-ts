@@ -37,7 +37,6 @@ const reducer = (state: SherlockState, action: SherlockAction): SherlockState =>
       let newState = {
         ...state,
         gameState: initRandomConfiguration(state.gameState.difficulty)};
-      console.log(`In new state: ${newState.gameState.clueSet.length}`);
       return newState;
     case CYCLE_DIFFICULTY:
       let difficulty = state.gameState.difficulty-1;

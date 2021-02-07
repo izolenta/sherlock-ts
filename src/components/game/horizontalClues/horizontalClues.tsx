@@ -13,6 +13,9 @@ import arrows2x2 from '../../../img/arrows-2x2.png';
 import arrows3x2 from '../../../img/arrows-3x2.png';
 import {TwoNotAdjacentClue} from "../../../models/clues/twoNotAdjacentClue";
 import {SherlockAction, USE_CLUE} from "../../../store/types";
+import {renderToString} from "react-dom/server";
+import ReactHtmlParser from "react-html-parser";
+import ReactTooltip from "react-tooltip";
 
 interface ClueProps {
   clues: GenericClue[],
@@ -124,8 +127,6 @@ export default class HorizontalClues extends React.Component<ClueProps> {
     const clues = this.props.clues;
     const data = [];
 
-    console.log(clues.length);
-
     for (let clue of clues) {
       if (this.isThreeCellClue(clue)) {
         const node = [];
@@ -145,9 +146,45 @@ export default class HorizontalClues extends React.Component<ClueProps> {
           node.push(<img src={arrows2x2} alt='arrows2x2'  className='arrow2' key={`${clues.indexOf(clue)}-arrow2`}/>);
         }
         const style = clue.isUsed? 'horizontal-clue used' : 'horizontal-clue';
+        let tooltipNode;
+        if (!clue.isUsed) {
+          let descr = clue.description;
+          let img1 = <div className={'sprite clue micro layout-cell padded ' + this.getFirstSpriteClass(clue)}/>
+          let img2 = <div className={'sprite clue micro layout-cell padded ' + this.getSecondSpriteClass(clue)}/>
+          let img3 = <div className={'sprite clue micro layout-cell padded ' + this.getThirdSpriteClass(clue)}/>
+          descr = descr.replaceAll('{0}', renderToString(img1));
+          descr = descr.replaceAll('{1}', renderToString(img2));
+          descr = descr.replaceAll('{2}', renderToString(img3));
+
+          let tooltip = <div className='help-tooltip'>
+            {ReactHtmlParser(descr)}
+            <div className='right-click'>
+              Right-click to mark this clue as used
+            </div>
+          </div>;
+
+          tooltipNode = <ReactTooltip
+            id={`v-clue-${clues.indexOf(clue)}`}
+            effect='solid'
+            class='tooltip-border'
+            backgroundColor='#000'
+            delayHide={100}
+            delayShow={100}
+            place='right'>
+            {tooltip}
+          </ReactTooltip>
+        }
+
         data.push(
-          <div className={style} key={`${clues.indexOf(clue)}-main`} onContextMenu={(event) => this.reverseUsed(clue, event)}>
+          <div
+            className={style}
+            key={`${clues.indexOf(clue)}-main`}
+            onContextMenu={(event) => this.reverseUsed(clue, event)}
+            data-tip='lol'
+            data-for={`v-clue-${clues.indexOf(clue)}`}
+          >
             {node}
+            {tooltipNode}
           </div>
         );
       }

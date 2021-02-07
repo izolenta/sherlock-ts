@@ -44,7 +44,6 @@ export function initRandomConfiguration(difficulty: number): GameState {
   do {
     currentPuzzle = generateRuleSet(new BoardState(), difficulty);
   } while (!currentPuzzle)
-  console.log(`SEET to: ${currentPuzzle.clues.length}`);
   return new GameState({
     state: currentPuzzle.board,
     clueset: currentPuzzle.clues,
@@ -142,7 +141,6 @@ function generateRuleSet(field: BoardState, difficulty: number): GeneratedRuleSe
     if (res.openedCells <= 2) {
       clues = shuffleClues(clues);
       clues = shrinkClues(fieldClone, clues)?? [];
-      console.log(`Length: ${clues.length}`);
       if (clues.length > 0) {
         break;
       }
@@ -154,7 +152,6 @@ function generateRuleSet(field: BoardState, difficulty: number): GeneratedRuleSe
   if (fieldClone.getNotResolvedCellCount() !== 0) {
     return undefined;
   }
-  console.log(`Returned: ${clues.length}`);
   return {board: result, clues: clues};
 }
 
