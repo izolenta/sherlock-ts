@@ -14,7 +14,6 @@ import arrows3x2 from '../../../img/arrows-3x2.png';
 import {TwoNotAdjacentClue} from "../../../models/clues/twoNotAdjacentClue";
 import {SherlockAction, USE_CLUE} from "../../../store/types";
 import {renderToString} from "react-dom/server";
-import ReactHtmlParser from "react-html-parser";
 import ReactTooltip from "react-tooltip";
 
 interface ClueProps {
@@ -157,7 +156,7 @@ export default class HorizontalClues extends React.Component<ClueProps> {
           descr = descr.replaceAll('{2}', renderToString(img3));
 
           let tooltip = <div className='help-tooltip'>
-            {ReactHtmlParser(descr)}
+            <div dangerouslySetInnerHTML={{ __html: descr }} />
             <div className='right-click'>
               Right-click to mark this clue as used
             </div>

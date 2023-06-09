@@ -3,7 +3,6 @@ import {GenericClue} from '../../../models/clues/genericClue';
 import {ClueItem} from '../../../models/clues/clueItem';
 import './verticalClues.css';
 import '../../../styles/common.css';
-import ReactHtmlParser from 'react-html-parser';
 
 import crossImg from '../../../img/cross.png';
 import {TwoInSameColumnClue} from "../../../models/clues/twoInSameColumnClue";
@@ -80,7 +79,8 @@ export default class VerticalClues extends React.Component<ClueProps> {
           descr = descr.replaceAll('{1}', renderToString(img2));
 
           let tooltip = <div className='help-tooltip'>
-            {ReactHtmlParser(descr)}
+            <div dangerouslySetInnerHTML={{ __html: descr }} />
+            {/*{ReactHtmlParser(descr)}*/}
             <div className='right-click'>
               Right-click to mark this clue as used
             </div>

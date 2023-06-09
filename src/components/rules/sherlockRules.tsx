@@ -1,5 +1,4 @@
-import CIcon from '@coreui/icons-react'
-import { freeSet } from '@coreui/icons'
+import {BsArrowRightCircle} from 'react-icons/bs';
 import React, { FC, useContext } from 'react';
 import Context from '../../context';
 import './sherlockRules.css'
@@ -44,7 +43,7 @@ const SherlockRules : FC<{}> = () => {
         Coding: &copy; <a className='link' href='https://github.com/izolenta' target='_blank' rel='noreferrer'>Izolenta</a> especially for AngularAttack 2017, rewritten from Dart/Angular to TS/React in 2021
       </div>
       
-      <CIcon className='icon-right link' content={freeSet.cilChevronCircleRightAlt}size="3xl" onClick={goToGame}/>
+      <BsArrowRightCircle className='icon-right link' onClick={goToGame}/>
     </div>
   );
 };

@@ -3,12 +3,11 @@ import Context from '../../context';
 import Board from './board/board';
 import HorizontalClues from './horizontalClues/horizontalClues';
 import VerticalClues from "./verticalClues/verticalClues";
-import {freeSet} from '@coreui/icons';
-import {CIcon} from '@coreui/icons-react';
 import {CYCLE_DIFFICULTY, GO_TO_LAST_CORRECT, GO_TO_SETTINGS, START_NEW_GAME, UNDO} from '../../store/types';
 import './sherlockGame.css';
 import {DIFFICULTY_EASY, DIFFICULTY_HARD, DIFFICULTY_MEDIUM} from '../../models/gameDifficulties.d';
 import { useState } from 'react'
+import {CiSettings} from 'react-icons/ci';
 
 const SherlockGame: FC = () => {
 
@@ -77,7 +76,7 @@ const SherlockGame: FC = () => {
           {label}
         </button>
       </div>
-      <CIcon className='icon-right link' content={freeSet.cilSettings} size='3xl' onClick={goToHelp} />
+      <CiSettings className='icon-right link' onClick={goToHelp} />
     </React.Fragment>
   );
 };
